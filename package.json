@@ -16,7 +16,7 @@
     "template",
     "lit-html"
   ],
-  "author": "Akiomi Kamakura",
+  "author": "Akiomi Kamakura <akiomik@gmail.com>",
   "license": "Apache-2.0",
   "bugs": {
     "url": "https://github.com/akiomik/snowpack-plugin-minify-html-literals/issues"

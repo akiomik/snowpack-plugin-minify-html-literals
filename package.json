@@ -1,0 +1,25 @@
+{
+  "name": "snowpack-plugin-minify-html-literals",
+  "version": "0.0.1",
+  "description": "Snowpack plugin to minify HTML template literal strings",
+  "main": "index.js",
+  "scripts": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/akiomik/snowpack-plugin-minify-html-literals.git"
+  },
+  "keywords": [
+    "minify",
+    "html",
+    "literal",
+    "literals",
+    "template",
+    "lit-html"
+  ],
+  "author": "Akiomi Kamakura",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/akiomik/snowpack-plugin-minify-html-literals/issues"
+  },
+  "homepage": "https://github.com/akiomik/snowpack-plugin-minify-html-literals#readme"
+}

@@ -2,6 +2,7 @@ snowpack-plugin-minify-html-literals
 ------------------------------------
 
 [![npm version](https://badge.fury.io/js/snowpack-plugin-minify-html-literals.svg)](https://badge.fury.io/js/snowpack-plugin-minify-html-literals)
+[![Node.js CI](https://github.com/akiomik/snowpack-plugin-minify-html-literals/actions/workflows/node-ci.yml/badge.svg)](https://github.com/akiomik/snowpack-plugin-minify-html-literals/actions/workflows/node-ci.yml)
 
 A [snowpack](https://www.snowpack.dev) plugin to minify HTML template literal strings, uses [minify-html-literals](https://github.com/asyncLiz/minify-html-literals).
 

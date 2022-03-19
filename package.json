@@ -3,6 +3,9 @@
   "version": "0.0.1",
   "description": "A snowpack plugin to minify HTML template literal strings",
   "main": "index.js",
+  "engines": {
+    "node": ">=10.0.0"
+  },
   "scripts": {},
   "repository": {
     "type": "git",

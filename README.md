@@ -33,3 +33,19 @@ const template = html`<div><p>Hello, World!</p></div>`;
 const body = document.querySelector('body');
 body.innerHTML = template;
 ```
+
+## Options
+
+```js
+// snowpack.config.mjs
+export default {
+  plugins: [
+    [
+      'snowpack-plugin-minify-html-literals',
+      {
+        options: null // minify-html-literals options. See https://github.com/asyncLiz/minify-html-literals#options
+      }
+    ],
+  ],
+};
+```

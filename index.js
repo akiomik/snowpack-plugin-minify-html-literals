@@ -12,29 +12,29 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-const minifyHTMLLiterals = require('minify-html-literals').minifyHTMLLiterals;
+const { minifyHTMLLiterals } = require('minify-html-literals');
 
-module.exports = function (snowpackConfig, pluginOptions = {}) {
-  return {
-    name: 'snowpack-plugin-minify-html-literals',
-    async transform({ id, contents, isDev, fileExt }) {
-      if (!['.js', '.mjs', '.ts'].includes(fileExt)) {
-        return;
-      }
+module.exports = (snowpackConfig, pluginOptions = {}) => ({
+  name: 'snowpack-plugin-minify-html-literals',
+  async transform({
+    id, contents, fileExt,
+  }) {
+    if (!['.js', '.mjs', '.ts'].includes(fileExt)) {
+      return contents;
+    }
 
-      const result = minifyHTMLLiterals(
-        contents,
-        {
-          fileName: id,
-          ...pluginOptions.options
-        }
-      );
+    const result = minifyHTMLLiterals(
+      contents,
+      {
+        fileName: id,
+        ...pluginOptions.options,
+      },
+    );
 
-      if (!result) {
-        return;
-      }
+    if (!result) {
+      return contents;
+    }
 
-      return result.code;
-    },
-  };
-};
+    return result.code;
+  },
+});

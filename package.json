@@ -12,11 +12,14 @@
     "url": "git+https://github.com/akiomik/snowpack-plugin-minify-html-literals.git"
   },
   "keywords": [
+    "snowpack",
+    "snowpack-plugin",
     "minify",
     "html",
     "literal",
     "literals",
     "template",
+    "tagged",
     "lit-html"
   ],
   "author": "Akiomi Kamakura <akiomik@gmail.com>",

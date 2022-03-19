@@ -21,6 +21,7 @@ import {minifyHTMLLiterals, Options} from 'minify-html-literals';
 
 interface PluginOptions {
   options?: Options;
+  exts?: string[];
 }
 
 const plugin: SnowpackPluginFactory<PluginOptions> = (
@@ -29,7 +30,13 @@ const plugin: SnowpackPluginFactory<PluginOptions> = (
 ) => ({
   name: 'snowpack-plugin-minify-html-literals',
   async transform({id, contents, fileExt}: PluginTransformOptions) {
-    if (!['.js', '.mjs', '.ts'].includes(fileExt)) {
+    const defaultOptions = {exts: ['.js', '.mjs', '.ts']};
+    const options = {
+      ...defaultOptions,
+      ...pluginOptions,
+    };
+
+    if (!options.exts.includes(fileExt)) {
       return null;
     }
 

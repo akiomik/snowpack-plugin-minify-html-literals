@@ -52,7 +52,8 @@ export default {
     [
       'snowpack-plugin-minify-html-literals',
       {
-        options: null // minify-html-literals options. See https://github.com/asyncLiz/minify-html-literals#options
+        options: null, // minify-html-literals options. See https://github.com/asyncLiz/minify-html-literals#options
+        exts: ['.js', '.mjs', '.ts'], // target file extensions
       }
     ],
   ],

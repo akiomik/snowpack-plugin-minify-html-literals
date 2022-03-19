@@ -12,27 +12,31 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import type { SnowpackPluginFactory, SnowpackConfig, PluginTransformOptions } from 'snowpack';
-import { minifyHTMLLiterals, Options } from 'minify-html-literals';
+import type {
+  SnowpackPluginFactory,
+  SnowpackConfig,
+  PluginTransformOptions,
+} from 'snowpack';
+import {minifyHTMLLiterals, Options} from 'minify-html-literals';
 
 interface PluginOptions {
-  options?: Options
+  options?: Options;
 }
 
-const plugin: SnowpackPluginFactory<PluginOptions> = (snowpackConfig: SnowpackConfig, pluginOptions: PluginOptions = {}) => ({
+const plugin: SnowpackPluginFactory<PluginOptions> = (
+  snowpackConfig: SnowpackConfig,
+  pluginOptions: PluginOptions = {}
+) => ({
   name: 'snowpack-plugin-minify-html-literals',
-  async transform({ id, contents, fileExt }: PluginTransformOptions) {
+  async transform({id, contents, fileExt}: PluginTransformOptions) {
     if (!['.js', '.mjs', '.ts'].includes(fileExt)) {
       return null;
     }
 
-    const result = minifyHTMLLiterals(
-      contents.toString(),
-      {
-        fileName: id,
-        ...pluginOptions.options,
-      },
-    );
+    const result = minifyHTMLLiterals(contents.toString(), {
+      fileName: id,
+      ...pluginOptions.options,
+    });
 
     if (!result) {
       return null;

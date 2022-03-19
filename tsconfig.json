@@ -1,5 +1,7 @@
 {
+  "extends": "./node_modules/gts/tsconfig-google.json",
   "compilerOptions": {
+    "rootDir": ".",
     "target": "esnext",
     "module": "commonjs",
     "moduleResolution": "node",
@@ -9,5 +11,9 @@
     "pretty": true,
     "newLine": "lf",
     "outDir": "dist"
-  }
+  },
+  "include": [
+    "src/**/*.ts",
+    "test/**/*.ts"
+  ]
 }

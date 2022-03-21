@@ -3,6 +3,8 @@
   "version": "0.0.1",
   "description": "A snowpack plugin to minify HTML template literal strings",
   "main": "dist/index.js",
+  "types": "dist/index.d.js",
+  "sideEffects": false,
   "engines": {
     "node": ">=10.0.0"
   },
@@ -32,7 +34,7 @@
     "tagged",
     "lit-html"
   ],
-  "author": "Akiomi Kamakura <akiomik@gmail.com>",
+  "author": "Akiomi Kamakura <akiomik@gmail.com> (https://github.com/akiomik)",
   "license": "Apache-2.0",
   "bugs": {
     "url": "https://github.com/akiomik/snowpack-plugin-minify-html-literals/issues"

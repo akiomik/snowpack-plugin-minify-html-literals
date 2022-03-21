@@ -20,8 +20,8 @@ import type {
 import {minifyHTMLLiterals, Options} from 'minify-html-literals';
 
 interface PluginOptions {
-  options?: Options;
-  exts?: string[];
+  readonly options?: Options;
+  readonly exts?: string[];
 }
 
 const plugin: SnowpackPluginFactory<PluginOptions> = (

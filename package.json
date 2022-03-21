@@ -1,6 +1,6 @@
 {
   "name": "snowpack-plugin-minify-html-literals",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "A snowpack plugin to minify HTML template literal strings",
   "main": "./dist/cjs/index.js",
   "module": "./dist/esm/index.js",

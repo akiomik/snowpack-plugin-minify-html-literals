@@ -66,6 +66,7 @@
     "./dist"
   ],
   "workspaces": [
-    "tests/integration/esm"
+    "tests/integration/esm",
+    "tests/integration/cjs"
   ]
 }

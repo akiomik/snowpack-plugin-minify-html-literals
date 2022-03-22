@@ -64,5 +64,8 @@
   },
   "files": [
     "./dist"
+  ],
+  "workspaces": [
+    "tests/integration/esm"
   ]
 }

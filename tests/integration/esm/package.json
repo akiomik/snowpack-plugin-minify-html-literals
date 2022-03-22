@@ -1,0 +1,14 @@
+{
+  "name": "integration-test-esm",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "main": "index.js",
+  "devDependencies": {
+    "snowpack": "^3.8.8",
+    "snowpack-plugin-minify-html-literals": "../../../"
+  },
+  "scripts": {
+    "build": "snowpack build"
+  }
+}

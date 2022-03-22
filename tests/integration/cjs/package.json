@@ -8,6 +8,7 @@
     "snowpack-plugin-minify-html-literals": "../../../"
   },
   "scripts": {
-    "build": "snowpack build"
+    "build": "snowpack build",
+    "clean": "rimraf dist"
   }
 }

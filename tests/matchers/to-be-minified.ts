@@ -12,21 +12,17 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import path from 'path';
+import fs from 'fs';
 
-import {execAsync} from './helper';
-import '../matchers/syntax';
-import toBeMinified from '../matchers/to-be-minified';
+import {minifyHTMLLiterals} from 'minify-html-literals';
 
-beforeEach(() => {
-  expect.extend({toBeMinified});
-});
+export default async function toBeMinified(
+  filename: string
+): Promise<jest.CustomMatcherResult> {
+  const content = await fs.promises.readFile(filename, 'utf8');
+  const result = minifyHTMLLiterals(content.toString());
+  const pass = result === null;
+  const message = () => (pass ? 'minified' : 'not minified');
 
-describe('cjs', () => {
-  const root = path.join(__dirname, 'cjs');
-
-  test('creates minified index.js', async () => {
-    await execAsync('npm run build', {cwd: root});
-    await expect(path.join(root, 'dist', 'index.js')).toBeMinified();
-  });
-});
+  return {pass, message};
+}

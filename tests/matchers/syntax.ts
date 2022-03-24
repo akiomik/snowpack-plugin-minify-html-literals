@@ -19,6 +19,7 @@ import type {PluginTransformOptions} from 'snowpack';
 
 interface CustomMatchers<R = unknown> {
   toTransform(opts: PluginTransformOptions, to?: string): R;
+  toBeMinified(): R;
 }
 
 declare global {

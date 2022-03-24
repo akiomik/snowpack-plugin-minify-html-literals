@@ -1,6 +1,7 @@
 snowpack-plugin-minify-html-literals
 ------------------------------------
 
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/ae60f13bd8ad434291d736afec401861)](https://app.codacy.com/gh/akiomik/snowpack-plugin-minify-html-literals?utm_source=github.com&utm_medium=referral&utm_content=akiomik/snowpack-plugin-minify-html-literals&utm_campaign=Badge_Grade_Settings)
 [![npm version](https://badge.fury.io/js/snowpack-plugin-minify-html-literals.svg)](https://badge.fury.io/js/snowpack-plugin-minify-html-literals)
 [![Node.js CI](https://github.com/akiomik/snowpack-plugin-minify-html-literals/actions/workflows/node-ci.yml/badge.svg)](https://github.com/akiomik/snowpack-plugin-minify-html-literals/actions/workflows/node-ci.yml)
 [![CodeQL](https://github.com/akiomik/snowpack-plugin-minify-html-literals/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/akiomik/snowpack-plugin-minify-html-literals/actions/workflows/codeql-analysis.yml)

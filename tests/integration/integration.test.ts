@@ -22,11 +22,13 @@ beforeEach(() => {
   expect.extend({toBeMinified});
 });
 
-describe('cjs', () => {
-  const root = path.join(__dirname, 'cjs');
-
-  test('creates minified index.js', async () => {
-    await execAsync('npm run build', {cwd: root});
-    await expect(path.join(root, 'dist', 'index.js')).toBeMinified();
-  });
+describe('integration', () => {
+  test.each([['cjs'], ['esm']])(
+    'creates minified index.js on %s',
+    async (dirname: string) => {
+      const root = path.join(__dirname, dirname);
+      await execAsync('npm run build', {cwd: root});
+      await expect(path.join(root, 'dist', 'index.js')).toBeMinified();
+    }
+  );
 });

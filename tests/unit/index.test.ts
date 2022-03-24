@@ -16,6 +16,12 @@ import {createConfiguration, PluginTransformOptions} from 'snowpack';
 import {Template, TemplatePart} from 'parse-literals';
 
 import plugin from '../../src/index';
+import '../matchers/syntax';
+import toTransform from '../matchers/to-transform';
+
+beforeEach(() => {
+  expect.extend({toTransform});
+});
 
 describe('plugin', () => {
   const defaultTransformOpts: PluginTransformOptions = {
@@ -61,105 +67,56 @@ describe('plugin', () => {
           </div>
         \`;
       `;
-
-      const transform = plugin(createConfiguration()).transform;
-      if (!transform) {
-        fail('transform must be not null');
-      }
-
-      const actual = await transform({...defaultTransformOpts, contents});
-      expect(actual).toBeNull();
+      const opts = {...defaultTransformOpts, contents};
+      await expect(plugin(createConfiguration())).not.toTransform(opts);
     });
   });
 
   describe('when tagged html literal is included', () => {
     test('returns minified contents', async () => {
-      const transform = plugin(createConfiguration()).transform;
-      if (!transform) {
-        fail('transform must be not null');
-      }
-
-      const actual = await transform({
+      const opts: PluginTransformOptions = {
         ...defaultTransformOpts,
         contents: jsWithTag,
-      });
-      expect(actual).toEqual(minifiedJsWithTag);
+      };
+      const p = plugin(createConfiguration());
+      await expect(p).toTransform(opts, minifiedJsWithTag);
     });
   });
 
   describe('when untagged html literal is included and shouldMinify returns false', () => {
-    test('returns null', async () => {
-      const contents = `
-        document.body.innerHTML = \`
-          <div data-minify="true">
-            <p>Hello, World!</p>
-          </div>
-        \`;
-      `;
-
-      const transform = plugin(createConfiguration()).transform;
-      if (!transform) {
-        fail('transform must be not null');
-      }
-
-      const actual = await transform({...defaultTransformOpts, contents});
-      expect(actual).toBeNull();
+    test('does not transform', async () => {
+      const opts = {...defaultTransformOpts, contents: jsWithoutTag};
+      await expect(plugin(createConfiguration())).not.toTransform(opts);
     });
   });
 
   describe('when untagged html literal is included and shouldMinify returns true', () => {
-    test('returns minified contents', async () => {
-      const opts = {
-        options: {
-          shouldMinify: (template: Template) => {
-            return template.parts.some((part: TemplatePart) =>
-              part.text.includes('data-minify="true"')
-            );
-          },
-        },
+    test('transforms', async () => {
+      const shouldMinify = (template: Template) => {
+        return template.parts.some((part: TemplatePart) =>
+          part.text.includes('data-minify="true"')
+        );
       };
-      const transform = plugin(createConfiguration(), opts).transform;
-      if (!transform) {
-        fail('transform must be not null');
-      }
-
-      const actual = await transform({
-        ...defaultTransformOpts,
-        contents: jsWithoutTag,
-      });
-      expect(actual).toEqual(minifiedJsWithoutTag);
+      const pluginOpts = {options: {shouldMinify}};
+      const opts = {...defaultTransformOpts, contents: jsWithoutTag};
+      const p = plugin(createConfiguration(), pluginOpts);
+      await expect(p).toTransform(opts, minifiedJsWithoutTag);
     });
   });
 
   describe('when fileExt is not included in exts option', () => {
-    test('returns null', async () => {
-      const opts = {exts: ['.ts']};
-      const transform = plugin(createConfiguration(), opts).transform;
-      if (!transform) {
-        fail('transform must be not null');
-      }
-
-      const actual = await transform({
-        ...defaultTransformOpts,
-        contents: jsWithTag,
-      });
-      expect(actual).toBeNull();
+    test('does not transform', async () => {
+      const pluginOpts = {exts: ['.ts']};
+      const opts = {...defaultTransformOpts, contents: jsWithTag};
+      expect(plugin(createConfiguration(), pluginOpts)).not.toTransform(opts);
     });
   });
 
   describe('when fileExt is included in exts option', () => {
-    test('returns not null', async () => {
-      const opts = {exts: ['.js']};
-      const transform = plugin(createConfiguration(), opts).transform;
-      if (!transform) {
-        fail('transform must be not null');
-      }
-
-      const actual = await transform({
-        ...defaultTransformOpts,
-        contents: jsWithTag,
-      });
-      expect(actual).not.toBeNull();
+    test('transforms', async () => {
+      const pluginOpts = {exts: ['.js']};
+      const opts = {...defaultTransformOpts, contents: jsWithTag};
+      expect(plugin(createConfiguration(), pluginOpts)).toTransform(opts);
     });
   });
 });

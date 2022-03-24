@@ -12,31 +12,21 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import fs from 'fs';
 import path from 'path';
 
-import {minifyHTMLLiterals} from 'minify-html-literals';
-
 import {execAsync} from './helper';
+import '../matchers/syntax';
+import toBeMinified from '../matchers/to-be-minified';
+
+beforeEach(() => {
+  expect.extend({toBeMinified});
+});
 
 describe('esm', () => {
   const root = path.join(__dirname, 'esm');
 
   test('creates minified index.js', async () => {
-    const content = await fs.promises.readFile(
-      path.join(root, 'index.js'),
-      'utf8'
-    );
-    const minified = minifyHTMLLiterals(content.toString());
-    if (!minified) {
-      fail('minified must be not null');
-    }
-
     await execAsync('npm run build', {cwd: root});
-    const actual = await fs.promises.readFile(
-      path.join(root, 'dist', 'index.js'),
-      'utf8'
-    );
-    expect(actual.toString()).toEqual(minified.code);
+    await expect(path.join(root, 'dist', 'index.js')).toBeMinified();
   });
 });

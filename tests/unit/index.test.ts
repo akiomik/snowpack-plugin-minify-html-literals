@@ -29,6 +29,29 @@ describe('plugin', () => {
     isPackage: false,
   };
 
+  const jsWithTag = `
+    const html = (strings) => strings.raw[0];
+    document.body.innerHTML = html\`
+      <div>
+        <p>Hello, World!</p>
+      </div>
+    \`;
+  `;
+  const minifiedJsWithTag = `
+    const html = (strings) => strings.raw[0];
+    document.body.innerHTML = html\`<div><p>Hello, World!</p></div>\`;
+  `;
+  const jsWithoutTag = `
+    document.body.innerHTML = \`
+      <div data-minify="true">
+        <p>Hello, World!</p>
+      </div>
+    \`;
+  `;
+  const minifiedJsWithoutTag = `
+    document.body.innerHTML = \`<div data-minify="true"><p>Hello, World!</p></div>\`;
+  `;
+
   describe('when tagged html literal is not included', () => {
     test('returns null', async () => {
       const contents = `
@@ -51,26 +74,16 @@ describe('plugin', () => {
 
   describe('when tagged html literal is included', () => {
     test('returns minified contents', async () => {
-      const contents = `
-        const html = (strings) => strings.raw[0];
-        document.body.innerHTML = html\`
-          <div>
-            <p>Hello, World!</p>
-          </div>
-        \`;
-      `;
-      const expected = `
-        const html = (strings) => strings.raw[0];
-        document.body.innerHTML = html\`<div><p>Hello, World!</p></div>\`;
-      `;
-
       const transform = plugin(createConfiguration()).transform;
       if (!transform) {
         fail('transform must be not null');
       }
 
-      const actual = await transform({...defaultTransformOpts, contents});
-      expect(actual).toEqual(expected);
+      const actual = await transform({
+        ...defaultTransformOpts,
+        contents: jsWithTag,
+      });
+      expect(actual).toEqual(minifiedJsWithTag);
     });
   });
 
@@ -96,17 +109,6 @@ describe('plugin', () => {
 
   describe('when untagged html literal is included and shouldMinify returns true', () => {
     test('returns minified contents', async () => {
-      const contents = `
-        document.body.innerHTML = \`
-          <div data-minify="true">
-            <p>Hello, World!</p>
-          </div>
-        \`;
-      `;
-      const expected = `
-        document.body.innerHTML = \`<div data-minify="true"><p>Hello, World!</p></div>\`;
-      `;
-
       const opts = {
         options: {
           shouldMinify: (template: Template) => {
@@ -121,51 +123,42 @@ describe('plugin', () => {
         fail('transform must be not null');
       }
 
-      const actual = await transform({...defaultTransformOpts, contents});
-      expect(actual).toEqual(expected);
+      const actual = await transform({
+        ...defaultTransformOpts,
+        contents: jsWithoutTag,
+      });
+      expect(actual).toEqual(minifiedJsWithoutTag);
     });
   });
 
   describe('when fileExt is not included in exts option', () => {
     test('returns null', async () => {
-      const contents = `
-        const html = (strings) => strings.raw[0];
-        document.body.innerHTML = html\`
-          <div>
-            <p>Hello, World!</p>
-          </div>
-        \`;
-      `;
-
       const opts = {exts: ['.ts']};
       const transform = plugin(createConfiguration(), opts).transform;
       if (!transform) {
         fail('transform must be not null');
       }
 
-      const actual = await transform({...defaultTransformOpts, contents});
+      const actual = await transform({
+        ...defaultTransformOpts,
+        contents: jsWithTag,
+      });
       expect(actual).toBeNull();
     });
   });
 
   describe('when fileExt is included in exts option', () => {
     test('returns not null', async () => {
-      const contents = `
-        const html = (strings) => strings.raw[0];
-        document.body.innerHTML = html\`
-          <div>
-            <p>Hello, World!</p>
-          </div>
-        \`;
-      `;
-
       const opts = {exts: ['.js']};
       const transform = plugin(createConfiguration(), opts).transform;
       if (!transform) {
         fail('transform must be not null');
       }
 
-      const actual = await transform({...defaultTransformOpts, contents});
+      const actual = await transform({
+        ...defaultTransformOpts,
+        contents: jsWithTag,
+      });
       expect(actual).not.toBeNull();
     });
   });

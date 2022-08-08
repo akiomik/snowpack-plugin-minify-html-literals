@@ -2,7 +2,7 @@
 
 [![npm version](https://badge.fury.io/js/snowpack-plugin-minify-html-literals.svg)](https://badge.fury.io/js/snowpack-plugin-minify-html-literals)
 [![Node.js CI](https://github.com/akiomik/snowpack-plugin-minify-html-literals/actions/workflows/node-ci.yml/badge.svg)](https://github.com/akiomik/snowpack-plugin-minify-html-literals/actions/workflows/node-ci.yml)
-[![CodeQL](https://github.com/akiomik/snowpack-plugin-minify-html-literals/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/akiomik/snowpack-plugin-minify-html-literals/actions/workflows/codeql-analysis.yml)
+[![CodeQL](https://github.com/akiomik/snowpack-plugin-minify-html-literals/actions/workflows/codeql.yml/badge.svg)](https://github.com/akiomik/snowpack-plugin-minify-html-literals/actions/workflows/codeql.yml)
 
 `snowpack-plugin-minify-html-literals` is a [snowpack](https://www.snowpack.dev) plugin to minify HTML template literal strings, using [minify-html-literals](https://github.com/asyncLiz/minify-html-literals).
 
